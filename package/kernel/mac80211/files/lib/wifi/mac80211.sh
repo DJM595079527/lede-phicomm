@@ -77,22 +77,18 @@ detect_mac80211() {
 		[ "$found" -gt 0 ] && continue
 
 		mode_band="g"
-		channel="11"
-		htmode=""
+		channel="auto"
+		htmode="HT40"
 		ht_capab=""
 		ssid_prefix="兰泽"
 		# 获取设备MAC地址后四位作为SSID的后缀
 		ssid_suffix="$(awk -F ":" '{printf toupper($5$6)}' /sys/class/net/eth0/address)"
 		ssid=${ssid_prefix}_2G_${ssid_suffix}
 
-		iw phy "$dev" info | grep -q 'Capabilities:' && htmode=HT20
-		iw phy "$dev" info | grep -q '2412 MHz' || { mode_band="a"; channel="36"; }
-
 		vht_cap=$(iw phy "$dev" info | grep -c 'VHT Capabilities')
 		cap_5ghz=$(iw phy "$dev" info | grep -c "Band 2")
 		[ "$vht_cap" -gt 0 -a "$cap_5ghz" -gt 0 ] && {
 			mode_band="a";
-			channel="36"
 			htmode="VHT80"
 			ssid=${ssid_prefix}_${ssid_suffix}
 		}
@@ -121,6 +117,7 @@ detect_mac80211() {
 			set wireless.radio${devidx}.hwmode=11${mode_band}
 			${dev_id}
 			${ht_capab}
+			set wireless.radio${devidx}.country=CN
 
 			set wireless.default_radio${devidx}=wifi-iface
 			set wireless.default_radio${devidx}.device=radio${devidx}
