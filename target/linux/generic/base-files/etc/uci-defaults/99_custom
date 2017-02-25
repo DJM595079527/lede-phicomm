@@ -8,4 +8,7 @@ uci commit system
 uci set luci.main.lang=zh_cn
 uci commit luci
 
+echo net.ipv6.conf.all.disable_ipv6=1 >> /etc/sysctl.conf
+sysctl -p
+
 exit 0
