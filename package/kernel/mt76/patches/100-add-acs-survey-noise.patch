@@ -1,0 +1,28 @@
+From da97cc215d5cf59f279de477bb1968c309f75b49 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=E9=83=AD=E5=B0=8F=E6=A1=A5?= <29551030@qq.com>
+Date: Sat, 17 Sep 2016 00:23:13 +0800
+Subject: [PATCH] =?UTF-8?q?=E4=BF=AE=E6=AD=A3=E8=BF=94=E5=9B=9E=E7=9A=84?=
+ =?UTF-8?q?=E4=BF=A1=E9=81=93=E6=A3=80=E6=B5=8B=E6=95=B0=E6=8D=AE=E5=92=8C?=
+ =?UTF-8?q?hostapd=E5=8C=85=E4=B8=8D=E5=85=BC=E5=AE=B9=E7=9A=84=E9=97=AE?=
+ =?UTF-8?q?=E9=A2=98=E3=80=82?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mac80211.c b/mac80211.c
+index 2813e88..04b6e93 100644
+--- a/mac80211.c
++++ b/mac80211.c
+@@ -292,7 +292,7 @@ int mt76_get_survey(struct ieee80211_hw *hw, int idx,
+ 
+ 	memset(survey, 0, sizeof(*survey));
+ 	survey->channel = chan;
+-	survey->filled = SURVEY_INFO_TIME | SURVEY_INFO_TIME_BUSY;
++	survey->filled = SURVEY_INFO_NOISE_DBM | SURVEY_INFO_TIME | SURVEY_INFO_TIME_BUSY;
+ 	if (chan == dev->main_chan)
+ 		survey->filled |= SURVEY_INFO_IN_USE;
+ 
