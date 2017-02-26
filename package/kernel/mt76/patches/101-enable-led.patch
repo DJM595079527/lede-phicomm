@@ -1,0 +1,11 @@
+diff -Nur mt76-2017-01-31-3c8caafc/mt76x2_init.c mt76-2017-01-31-3c8caafc-mod/mt76x2_init.c
+--- mt76-2017-01-31-3c8caafc/mt76x2_init.c	2017-02-26 18:33:32.572960973 +0800
++++ mt76-2017-01-31-3c8caafc-mod/mt76x2_init.c	2017-02-26 18:32:59.582961000 +0800
+@@ -157,6 +157,7 @@
+ 		{ MT_VHT_HT_FBK_CFG1,		0xedcba980 },
+ 		{ MT_PROT_AUTO_TX_CFG,		0x00830083 },
+ 		{ MT_HT_CTRL_CFG,		0x000001ff },
++		{ MT_MCU_LED_CTRL,		0x00840000 },
+ 	};
+ 	struct mt76x2_reg_pair prot_vals[] = {
+ 		{ MT_CCK_PROT_CFG,		DEFAULT_PROT_CFG },
