@@ -11,4 +11,19 @@ uci commit luci
 echo net.ipv6.conf.all.disable_ipv6=1 >> /etc/sysctl.conf
 sysctl -p
 
+# 如果设备型号是PSG1218，要根据factory分区是否标记有外置PA来判断是K2还是K2C，
+# 如果是K2，因为开源2.4G驱动暂时还未实现关闭内置PA，则需要将功率调制最小，
+# 如果是K2C，则需要将WAN口从交换机往前移动一个口。
+if grep -q PSG1218 /proc/cpuinfo; then
+        pa_flag=$(hexdump -s 55 -n 1 -e '1 1 "%.2X"' /dev/mtd2)
+        if [ "${pa_flag}" = "C0" ]; then
+                uci set wireless.radio1.txpower=0
+                uci commit wireless
+        else
+                uci set network.@switch_vlan[0].ports="0 1 2 6t"
+                uci set network.@switch_vlan[1].ports="3 6t"
+                uci commit network
+        fi
+fi
+
 exit 0
