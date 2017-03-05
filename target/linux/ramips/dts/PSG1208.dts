@@ -86,6 +86,11 @@
 			ralink,group = "i2c", "spi refclk", "wled";
 			ralink,function = "gpio";
 		};
+
+                pa {
+                        ralink,group = "pa";
+                        ralink,function = "pa";
+                };
 	};
 };
 
