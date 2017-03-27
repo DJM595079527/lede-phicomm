@@ -80,7 +80,7 @@ detect_mac80211() {
 		channel="auto"
 		htmode="HT40"
 		ht_capab=""
-		ssid_prefix="兰泽"
+		ssid_prefix="LEDE"
 		# 获取设备MAC地址后四位作为SSID的后缀
 		ssid_suffix="$(awk -F ":" '{printf toupper($5$6)}' /sys/class/net/eth0/address)"
 		ssid=${ssid_prefix}_2G_${ssid_suffix}
