@@ -1,0 +1,31 @@
+diff -Nur compat-wireless-2017-01-31/drivers/net/wireless/ralink/rt2x00/rt2800lib.c compat-wireless-2017-01-31-mod/drivers/net/wireless/ralink/rt2x00/rt2800lib.c
+--- compat-wireless-2017-01-31/drivers/net/wireless/ralink/rt2x00/rt2800lib.c	2017-03-30 20:25:49.794165142 +0800
++++ compat-wireless-2017-01-31-mod/drivers/net/wireless/ralink/rt2x00/rt2800lib.c	2017-03-30 20:38:45.658164035 +0800
+@@ -8901,15 +8901,24 @@
+ 	 */
+ 	rt2800_eeprom_read(rt2x00dev, EEPROM_NIC_CONF1, &eeprom);
+ 
+-	if (rt2x00_rt(rt2x00dev, RT3352)) {
++	if (rt2x00_rt(rt2x00dev, RT3352) || rt2x00_rt(rt2x00dev, RT5390)) {
+ 		if (!rt2x00_get_field16(eeprom,
+-		    EEPROM_NIC_CONF1_EXTERNAL_TX0_PA_3352))
++		    EEPROM_NIC_CONF1_EXTERNAL_TX0_PA_3352)) {
+ 		    __set_bit(CAPABILITY_INTERNAL_PA_TX0,
+ 			      &rt2x00dev->cap_flags);
++			rt2x00_info(rt2x00dev, "not found external PA\n");
++		} else {
++			rt2x00_info(rt2x00dev, "found external PA\n");
++		}
++
+ 		if (!rt2x00_get_field16(eeprom,
+-		    EEPROM_NIC_CONF1_EXTERNAL_TX1_PA_3352))
++		    EEPROM_NIC_CONF1_EXTERNAL_TX1_PA_3352)) {
+ 		    __set_bit(CAPABILITY_INTERNAL_PA_TX1,
+ 			      &rt2x00dev->cap_flags);
++			rt2x00_info(rt2x00dev, "not found external PA 2\n");
++		} else {
++			rt2x00_info(rt2x00dev, "found external PA 2\n");
++		}
+ 	}
+ 
+ 	return 0;
